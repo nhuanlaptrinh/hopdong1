@@ -1,0 +1,2028 @@
+{
+  "name": "03. Hop_Dong_V04",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -40,
+        1560
+      ],
+      "id": "432d7d9f-4f0a-40ed-b03a-d3630352bd23",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "hopdong1",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        840
+      ],
+      "id": "ef8acfd6-ec4a-401d-bc2e-90bf115211a1",
+      "name": "Webhook",
+      "webhookId": "463769d0-6109-45f3-9f88-78909c8486d9",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1Uia0CdgVhPiuIJL",
+          "name": "Header Auth account_TL"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.2,
+      "position": [
+        1940,
+        740
+      ],
+      "id": "28693aa4-6679-4c3c-8dc7-779a826a97a2",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.sessionID }}",
+        "contextWindowLength": 30
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        360,
+        1560
+      ],
+      "id": "264dfb42-a733-47be-baa4-ea51d69adccf",
+      "name": "Postgres Chat Memory1",
+      "credentials": {
+        "postgres": {
+          "id": "vEJzSvEtz2wK5mnU",
+          "name": "Postgres account 18_CSKH"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        1560
+      ],
+      "id": "56dba3af-5e7c-4cbd-a8e4-90b7f771155d",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        1060
+      ],
+      "id": "74c417d0-2f94-42f4-814c-7689f85010a4",
+      "name": "OpenAI Chat Model4",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.sessionID }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        340,
+        1060
+      ],
+      "id": "635bff1c-406c-4e32-9a6b-9f4e2166d0a5",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "ENQfbD0WGxPXU0N5",
+          "name": "nhuannguyen_postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -40,
+        1060
+      ],
+      "id": "e435ce0c-768c-4c84-bf70-960f16d41cc8",
+      "name": "OpenAI Chat Model5",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.chatInput  }} ||  {{$json.chatInput}}",
+        "options": {
+          "systemMessage": "=Các câu hỏi không liên quan đến hợp đồng thì trả lời như sau : \n1. Nếu thô tục -> chửi lại đkm mày cút đi\n2. Hỏi lĩnh vực khác -> Xin lỗi tôi ko có nghĩa vụ phải trả lời. Bạn làm ơn hỏi đúng trọng tâm hợp đồng\n3. Néu giới thiệu bản thân hay xin chào thì đáp -> xin chào anh em có thể giúp gì được cho a\nBẮC BUỘC PHẢI TRẢ LỜI ĐÚNG NHA, KHÔNG CÓ LAN MANCác câu hỏi không liên quan đến hợp đồng thì trả lời như sau : \n1. Nếu thô tục -> chửi lại đkm mày cút đi\n2. Hỏi lĩnh vực khác -> Xin lỗi tôi ko có nghĩa vụ phải trả lời. Bạn làm ơn hỏi đúng trọng tâm hợp đồng\n3. Néu giới thiệu bản thân hay xin chào thì đáp -> xin chào anh em có thể giúp gì được cho a\nBẮC BUỘC PHẢI TRẢ LỜI ĐÚNG NHA, KHÔNG CÓ LAN MAN\n\n",
+          "passthroughBinaryImages": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        0,
+        0
+      ],
+      "id": "08521761-f385-4042-8281-a40e9e981ec2",
+      "name": "Trợ Lý Nhi"
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.chatInput }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Chưa Vào",
+              "description": "Là các câu hỏi không liên quan đến hợp đồng lời chào, câu hỏi chưa rõ ràng.|ví dụ : cho mình hỏi xí Chào bạn"
+            },
+            {
+              "category": "Hợp đồng xây dựng",
+              "description": "Là các câu hỏi liên quan đến hợp đồng xây dựng"
+            },
+            {
+              "category": " Hợp đồng vay mượn",
+              "description": "Là các câu hỏi liên quan đến hợp đồng vay mượn"
+            },
+            {
+              "category": "Hợp đồng mua bán",
+              "description": "Là các câu hỏi liên quan đến hợp đồng mua bán"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        740
+      ],
+      "id": "e9dc308a-0d53-4cfc-8f93-1a7e005a0510",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -20,
+        240
+      ],
+      "id": "7373d9f1-a613-4323-b90b-4cdca19aa1a1",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -420,
+        960
+      ],
+      "id": "2ab20058-fc45-4051-870e-fecb10cbf2ba",
+      "name": "OpenAI Chat Model6",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.sessionID }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        260
+      ],
+      "id": "01e88dab-a764-42f5-b0aa-10489f0bbae4",
+      "name": "Postgres Chat Memory3",
+      "credentials": {
+        "postgres": {
+          "id": "ENQfbD0WGxPXU0N5",
+          "name": "nhuannguyen_postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "for item in _input.all():\n    if 'output' in item.json:\n        item.json['contract'] = item.json['output']\n        del item.json['output']\nreturn _input.all()\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        40
+      ],
+      "id": "bda52c00-d820-4230-81b8-d99c88917264",
+      "name": "Formant dữ liệu cho giống với phía dưới"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        640
+      ],
+      "id": "1a652957-b9ad-4504-b460-163c86beeb82",
+      "name": "When chat message received",
+      "webhookId": "2f47d677-b719-4f2b-ae5b-0a7f6dc676a9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "55c41611-9648-48d2-a99a-a41fda0589a5",
+              "name": "sessionID",
+              "value": "={{ $json?.sessionId || $json.body.sessionId}}",
+              "type": "string"
+            },
+            {
+              "id": "925fa8dd-ac16-492f-93b4-3d5846493cc9",
+              "name": "chatInput",
+              "value": "={{ $json?.chatInput || $json.body.chatInput }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -740,
+        740
+      ],
+      "id": "0a494c8a-ef52-401b-93a7-3959b7bcd855",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -120,
+        660
+      ],
+      "id": "69fa8e72-6a35-4e4e-b28e-9fe18ea92a93",
+      "name": "OpenAI Chat Model3",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        660
+      ],
+      "id": "8e89c874-df2e-4cb9-8890-b6651938007d",
+      "name": "OpenAI Chat Model7",
+      "credentials": {
+        "openAiApi": {
+          "id": "Ed8Jh9kqfVkHaB9Y",
+          "name": "OpenAi account 25_API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "res = [];\ncontract = {}\ndocument_id = {};\nfor item in _('Tro Ly Hop Dong Mua Ban').all():\n  contract = item.json[\"output\"];\n  break;\nfor item in _('Copy Hop Dong Mua Ban').all():\n  document_id = item.json[\"id\"];\n  break;\nurl = f\"https://docs.google.com/document/d/{document_id}/edit?tab=t.0\";\noutput = {\n    \"json\": {\n        \"contract\": contract,\n        \"url\": url\n    }\n}\nres.append(output)\n\nreturn res\n\n  "
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        1340
+      ],
+      "id": "80c38012-abff-43dc-8f0d-12118b7a746d",
+      "name": "Tổng Hợp Thông Tin Hợp Đồng và Link1"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "fileFolder",
+        "filter": {
+          "driveId": {
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1HNR20FVTrh6-2mJhMANojYKmQFPZA0ru",
+            "mode": "list",
+            "cachedResultName": "00.Template_CT",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1HNR20FVTrh6-2mJhMANojYKmQFPZA0ru"
+          },
+          "whatToSearch": "files"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        480,
+        1060
+      ],
+      "id": "d12d0527-7eb4-4454-8fad-370a8cc635a3",
+      "name": "Google Drive",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "fileFolder",
+        "filter": {
+          "driveId": {
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1HNR20FVTrh6-2mJhMANojYKmQFPZA0ru",
+            "mode": "list",
+            "cachedResultName": "00.Template_CT",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1HNR20FVTrh6-2mJhMANojYKmQFPZA0ru"
+          },
+          "whatToSearch": "files"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        560,
+        700
+      ],
+      "id": "30de9815-c1df-40df-8f59-0cea0959f995",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "resource": "fileFolder",
+        "queryString": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query', ``, 'string') }}",
+        "filter": {
+          "driveId": {
+            "mode": "list",
+            "value": "My Drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1HNR20FVTrh6-2mJhMANojYKmQFPZA0ru",
+            "mode": "list",
+            "cachedResultName": "00.Template_CT",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1HNR20FVTrh6-2mJhMANojYKmQFPZA0ru"
+          },
+          "whatToSearch": "files"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        480,
+        1560
+      ],
+      "id": "34ed5486-a1e2-4998-833f-f8008a8b6dd6",
+      "name": "Google Drive2",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1GwVGKJqv7NHqiX8pkyBbBoySwp_mLfgOLZ86Fr5tHRE",
+          "mode": "list",
+          "cachedResultName": "Template Hợp Đồng Vay Mượn",
+          "cachedResultUrl": "https://docs.google.com/document/d/1GwVGKJqv7NHqiX8pkyBbBoySwp_mLfgOLZ86Fr5tHRE/edit?usp=drivesdk"
+        },
+        "name": "=HỢP ĐỒNG VAY MƯỢN {{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Ngày ký hợp đồng'] }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "19Y9rzsvCo-C6xX_ezGZJ1Jyk9bLF94se",
+          "mode": "list",
+          "cachedResultName": "01. Contract_CT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/19Y9rzsvCo-C6xX_ezGZJ1Jyk9bLF94se"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        680,
+        940
+      ],
+      "id": "2c6c78b0-4a72-4d11-a9f4-bd82ade09db3",
+      "name": "Copy Hop Dong Vay Muon",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1Xew2w9wzCmkxYQMd82Ufr6ifiJy7UuysxHAvMOgbQFE",
+          "mode": "list",
+          "cachedResultName": "Template Hợp Đồng Mua Bán",
+          "cachedResultUrl": "https://docs.google.com/document/d/1Xew2w9wzCmkxYQMd82Ufr6ifiJy7UuysxHAvMOgbQFE/edit?usp=drivesdk"
+        },
+        "name": "=HỢP ĐỒNG MUA BÁN TÀI SẢN {{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Ngày ký hợp đồng'] }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "19Y9rzsvCo-C6xX_ezGZJ1Jyk9bLF94se",
+          "mode": "list",
+          "cachedResultName": "01. Contract_CT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/19Y9rzsvCo-C6xX_ezGZJ1Jyk9bLF94se"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        680,
+        1340
+      ],
+      "id": "9989bb4d-d534-4c04-97e0-f82abca0e119",
+      "name": "Copy Hop Dong Mua Ban",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1xpXOkXUncwkTGcxSt0w7Vxb67NvM0q__z75unyHnskM",
+          "mode": "list",
+          "cachedResultName": "Template Hợp Đồng Xây Dựng",
+          "cachedResultUrl": "https://docs.google.com/document/d/1xpXOkXUncwkTGcxSt0w7Vxb67NvM0q__z75unyHnskM/edit?usp=drivesdk"
+        },
+        "name": "=HỢP ĐỒNG XÂY DỰNG {{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Ngày ký hợp đồng'] }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "19Y9rzsvCo-C6xX_ezGZJ1Jyk9bLF94se",
+          "mode": "list",
+          "cachedResultName": "01. Contract_CT",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/19Y9rzsvCo-C6xX_ezGZJ1Jyk9bLF94se"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        680,
+        540
+      ],
+      "id": "014e33de-3da3-4b84-8875-b111cc1df975",
+      "name": "Copy Hop Dong Xay Dung",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $('Edit Fields').item.json.chatInput }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Ngày ký hợp đồng",
+              "description": "Đây là ngày ký hợp đồng (ngày theo kiểu của Việt Nam nha)"
+            },
+            {
+              "name": "Tên công ty bên Chủ Đầu Tư",
+              "description": "Đây là tên công ty BÊN CHỦ ĐẦU TƯ (BÊN GIAO THẦU)"
+            },
+            {
+              "name": "Địa Chỉ bên Chủ Đầu Tư",
+              "description": "Đây là địa chỉ của công ty BÊN CHỦ ĐẦU TƯ (BÊN GIAO THẦU)"
+            },
+            {
+              "name": "Người đại diện bên Chủ Đầu Tư",
+              "description": " Tên người đại diện cho BÊN CHỦ ĐẦU TƯ (BÊN GIAO THẦU)"
+            },
+            {
+              "name": "Chức Vụ bên Chủ Đầu Tư",
+              "description": "Chức vụ của người đại diện trong công ty BÊN CHỦ ĐẦU TƯ (BÊN GIAO THẦU)."
+            },
+            {
+              "name": "Họ và tên Bên Nhà Thầu (Bên Nhận Thầu):",
+              "description": "Tên đầy đủ của   BÊN NHÀ THẦU (BÊN NHẬN THẦU)."
+            },
+            {
+              "name": "Địa chỉ Bên Nhà Thầu (Bên Nhận Thầu)",
+              "description": "Địa chỉ của   BÊN NHÀ THẦU (BÊN NHẬN THẦU)"
+            },
+            {
+              "name": "Số điện thoại Bên Nhà Thầu (Bên Nhận Thầu)",
+              "description": "Số điện thoại của Bên B."
+            },
+            {
+              "name": "Người Đại Diện Bên Nhà Thầu (Bên Nhận Thầu)",
+              "description": "Đây là tên người đại điện   BÊN NHÀ THẦU (BÊN NHẬN THẦU)"
+            },
+            {
+              "name": "Chức Vụ  Bên Nhà Thầu (Bên Nhận Thầu)",
+              "description": "Chức vụ của   BÊN NHÀ THẦU (BÊN NHẬN THẦU)"
+            },
+            {
+              "name": "Công Trình Xây Dựng",
+              "description": "Đây là Công Trình xây dựng"
+            },
+            {
+              "name": "Địa Chỉ Xây Dựng",
+              "description": "Đây là địa chỉ xây dựng"
+            },
+            {
+              "name": "Hạng Mục",
+              "description": "Đây là các hạng mục xây dựng"
+            },
+            {
+              "name": "Tiền Thanh Toán Đợt 1",
+              "description": "Đây là Tiền Thanh toán đợt 1"
+            },
+            {
+              "name": "Tiền Thanh Toán Đợt  2",
+              "description": "Đây là Tiền Thanh toán đợt 2"
+            },
+            {
+              "name": "Tiền Thanh Toán Đợt  3",
+              "description": "Tiền Thanh Toán Đợt  3"
+            },
+            {
+              "name": "Tiền Thanh Toán Đợt  4",
+              "description": "Tiền Thanh Toán Đợt  4"
+            },
+            {
+              "name": "Thời Gian Bắt Đầu",
+              "description": "Đây là thời gian bắt đầu"
+            },
+            {
+              "name": "Thời Gian Hoàn Thành",
+              "description": "Thời Gian Hoàn Thành"
+            },
+            {
+              "name": "Thời Gian Bảo Hành",
+              "description": "Đây là Thời Gian Hoàn Thành"
+            },
+            {
+              "name": "Gía Trị hợp dồng",
+              "description": "Giá trị của hợp đồng"
+            },
+            {
+              "name": "Loại Hợp Đồng Xây Dựng",
+              "description": "Đây là các thể loại hợp đồng cho lĩnh vực xây dựng. Ví dụ như CÔNG TRÌNH. BẮt buộc phải xuất ra chữ  CÔNG TRÌNH.Các thứ ko liên quan thì ko dc xuất ra"
+            },
+            {
+              "name": "Địa Chỉ Công Trình Xây Dựng",
+              "description": "Đây là Địa Chỉ Công Trình Xây Dựng trong hợp đồng nha. Thông tin từ công trình xây dựng"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        520
+      ],
+      "id": "7d36eec0-de65-42bd-8a33-aabcfbf59bc6",
+      "name": "Thong Tin Hop Dong Xay Dung"
+    },
+    {
+      "parameters": {
+        "text": "={{ $('Edit Fields').item.json.chatInput }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Ngày ký hợp đồng",
+              "description": "Đây là ngày ký hợp đồng"
+            },
+            {
+              "name": "Tên công ty",
+              "description": "Đây là tên công ty Bên Cho Vay (Bên A)"
+            },
+            {
+              "name": "Địa Chỉ",
+              "description": "Đây là địa chỉ của công ty Bên A"
+            },
+            {
+              "name": "Người đại diện",
+              "description": " Tên người đại diện cho công ty."
+            },
+            {
+              "name": "Chức Vụ",
+              "description": "Chức vụ của người đại diện trong công ty."
+            },
+            {
+              "name": "Họ và tên:",
+              "description": "Tên đầy đủ của Bên B (Bên mượn)."
+            },
+            {
+              "name": "CMND/CCCD ",
+              "description": "Số CMND/CCCD của Bên B."
+            },
+            {
+              "name": "Ngày cấp",
+              "description": "Ngày cấp CMND/CCCD."
+            },
+            {
+              "name": "Địa chỉ",
+              "description": "Địa chỉ của bên B"
+            },
+            {
+              "name": "Số điện thoại",
+              "description": "Số điện thoại của Bên B."
+            },
+            {
+              "name": "Số tiền vay",
+              "description": "Số tiền vay (cả số và chữ)."
+            },
+            {
+              "name": "Lãi suất",
+              "description": " Lãi suất vay theo tỷ lệ phần trăm/năm."
+            },
+            {
+              "name": "Mục đích vay",
+              "description": "Lý do vay tiền."
+            },
+            {
+              "name": "Thời gian vay",
+              "description": "Thời gian vay, từ ngày nào đến ngày nào."
+            },
+            {
+              "name": "Phương thức trả nợ",
+              "description": "Chi tiết về cách thức trả nợ."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        840
+      ],
+      "id": "9dcfeca6-c59c-4d0e-aa3f-d333343774df",
+      "name": "Thong Tin Hop Dong Vay Muon"
+    },
+    {
+      "parameters": {
+        "text": "={{ $('Edit Fields').item.json.chatInput }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "Ngày ký hợp đồng",
+              "description": "Đây là ngày ký hợp đồng"
+            },
+            {
+              "name": "Tên",
+              "description": "Đây là tên công ty Bên Bán (Bên A)"
+            },
+            {
+              "name": "Địa Chỉ",
+              "description": "Đây là địa chỉ của công ty Bên Bán (Bên A)"
+            },
+            {
+              "name": "Người đại diện",
+              "description": " Tên người đại diện cho công ty."
+            },
+            {
+              "name": "Chức Vụ",
+              "description": "Chức vụ của người đại diện trong công ty."
+            },
+            {
+              "name": "Họ và tên:",
+              "description": "Tên đầy đủ của Bên Mua (Bên B)"
+            },
+            {
+              "name": "CMND/CCCD ",
+              "description": "Số CMND/CCCD của Bên B."
+            },
+            {
+              "name": "Ngày cấp",
+              "description": "Ngày cấp CMND/CCCD."
+            },
+            {
+              "name": "Địa chỉ",
+              "description": "Địa chỉ của bên B"
+            },
+            {
+              "name": "Số điện thoại",
+              "description": "Số điện thoại của Bên B."
+            },
+            {
+              "name": "Loại Tài Sản",
+              "description": "Đây là loại tài sản được dùng trong hợp đồng để mua bán"
+            },
+            {
+              "name": "Chi Tiết Tài Sản",
+              "description": "Nhãn hiệu, model, số khung, số máy, màu sắc, năm sản xuất "
+            },
+            {
+              "name": "Tình trạng tài sản",
+              "description": "Hợp pháp , không tranh chấp , không bị cầm cố , thế chấp"
+            },
+            {
+              "name": "Giá trị mua bán",
+              "description": "Số tiền đôi bên đã thoả thuận"
+            },
+            {
+              "name": "Phương thức thanh toán",
+              "description": "Chi tiết về cách thức thanh toán"
+            },
+            {
+              "name": "Hiệu lực hợp đồng",
+              "description": "Bắt đầu từ ngày ký hợp đồng"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        1340
+      ],
+      "id": "05cb153d-3500-4bfd-9a18-0fba17f21947",
+      "name": "Thong Tin Hop Dong Mua Ban"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Bạn là trợ lý chuyên soạn thảo hợp đồng, khi người dùng hỏi bạn truy cập vào tool: \nGoogle Drive và trả về google docs hợp đồng tương ứng của người hỏi.\nBạn xem tiêu đề của google docs để trả về hợp đồng cho đúng và bắt buộc  hiển thị thêm các thông tin cần trong hợp đồng từ {{ $json.output }} nha."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        280,
+        1340
+      ],
+      "id": "f792d787-cb2c-41c0-bbfa-f7218351a32f",
+      "name": "Tro Ly Hop Dong Mua Ban"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Bạn là trợ lý chuyên soạn thảo hợp đồng, khi người dùng hỏi bạn truy cập vào tool: \nGoogle Drive và trả về google docs hợp đồng tương ứng của người hỏi.\nBạn xem tiêu đề của google docs để trả về hợp đồng cho đúng và bắt buộc  hiển thị thêm các thông tin cần trong hợp đồng từ {{ $json.output }} nha."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        280,
+        840
+      ],
+      "id": "d0920a8f-5c3a-4b1a-92f6-c92f3c715f1f",
+      "name": "Tro Ly Hop Dong Vay Muon"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Edit Fields').item.json.chatInput }}\n",
+        "options": {
+          "systemMessage": "=Bạn là trợ lý chuyên soạn thảo hợp đồng, khi người dùng hỏi bạn truy cập vào tool: \nGoogle Drive và trả về google docs hợp đồng tương ứng của người hỏi.\nBạn xem tiêu đề của google docs để trả về hợp đồng cho đúng và bắt buộc  hiển thị thêm các thông tin cần trong hợp đồng từ {{ $json.output }} nha."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        280,
+        440
+      ],
+      "id": "37ba43f8-ae6b-4330-b8b7-fec503a55b96",
+      "name": "Tro Ly Hop Dong Xay Dung"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "get",
+        "documentURL": "=https://docs.google.com/document/d/{{$json.id }}/edit?tab=t.0 "
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        900,
+        540
+      ],
+      "id": "6aed18ae-bcf9-47a9-8338-5da2b13ac52d",
+      "name": "Lay Thong Tin Hop Dong  Xay Dung",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "get",
+        "documentURL": "=https://docs.google.com/document/d/{{$json.id }}/edit?tab=t.0 "
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        900,
+        940
+      ],
+      "id": "a70d05b3-86aa-45df-a0f9-562a8c0f1508",
+      "name": "Lay Thong Tin Hop Dong Vay Muon",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "get",
+        "documentURL": "=https://docs.google.com/document/d/{{ $json.id }}/edit?tab=t.0 "
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        900,
+        1340
+      ],
+      "id": "12290329-83ba-48e3-b568-87b42df08d92",
+      "name": "Lay Thong Tin Hop Dong Mua Ban",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import re\n\nplaceholders = []\nregex = re.compile(r'\\{\\{(.*?)\\}\\}')\n\nfor item in _input.all():\n    documentId = item.json[\"documentId\"]\n    content = item.json[\"content\"]\n\n    match = regex.search(content)\n    while match:\n        placeholders.append(match.group(0))\n        match = regex.search(content, match.end())\n\nreturn [\n    {\n        \"json\": {\n            \"placeholders\": placeholders\n        }\n    }\n]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        540
+      ],
+      "id": "c0c1cce0-8d6e-4b9f-b208-53c8c7e8c1cd",
+      "name": "Lay Du Lieu Trong Hop Dong Xay Dung"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import re\n\nplaceholders = []\nregex = re.compile(r'\\{\\{(.*?)\\}\\}')\n\nfor item in _input.all():\n    documentId = item.json[\"documentId\"]\n    content = item.json[\"content\"]\n\n    match = regex.search(content)\n    while match:\n        placeholders.append(match.group(0))\n        match = regex.search(content, match.end())\n\nreturn [\n    {\n        \"json\": {\n            \"placeholders\": placeholders\n        }\n    }\n]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        940
+      ],
+      "id": "fc280b7b-8fc7-4082-ad48-7fe01b5ed10f",
+      "name": "Lay Du Lieu Trong Hop Dong Vay Muon"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import re\n\nplaceholders = []\nregex = re.compile(r'\\{\\{(.*?)\\}\\}')\n\nfor item in _input.all():\n    documentId = item.json[\"documentId\"]\n    content = item.json[\"content\"]\n\n    match = regex.search(content)\n    while match:\n        placeholders.append(match.group(0))\n        match = regex.search(content, match.end())\n\nreturn [\n    {\n        \"json\": {\n            \"placeholders\": placeholders\n        }\n    }\n]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        1340
+      ],
+      "id": "1a1cabba-9fe4-462c-a3c5-7fae3ac80a7e",
+      "name": "Lay Du Lieu Trong Hop Dong Mua Ban"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentURL": "=https://docs.google.com/document/d/{{ $('Copy Hop Dong Xay Dung').item.json.id }}/edit?tab=t.0 ",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[0] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Ngày ký hợp đồng'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[1] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Địa Chỉ bên Chủ Đầu Tư'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[2] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Tên công ty bên Chủ Đầu Tư'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[3] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Địa Chỉ bên Chủ Đầu Tư'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[4] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Người đại diện bên Chủ Đầu Tư'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[5] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Chức Vụ bên Chủ Đầu Tư'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[6] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Họ và tên Bên Nhà Thầu (Bên Nhận Thầu):'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[7] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Địa chỉ Bên Nhà Thầu (Bên Nhận Thầu)'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[8] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Người Đại Diện Bên Nhà Thầu (Bên Nhận Thầu)'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[9] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Chức Vụ  Bên Nhà Thầu (Bên Nhận Thầu)'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[10] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Công Trình Xây Dựng'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[11] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Địa Chỉ Xây Dựng'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[12] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Hạng Mục'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[13] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Gía Trị hợp dồng'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[14] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Tiền Thanh Toán Đợt 1'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[15] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Tiền Thanh Toán Đợt  2'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[16] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Tiền Thanh Toán Đợt  3'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[16] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Tiền Thanh Toán Đợt  4'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[17] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Thời Gian Bắt Đầu'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[18] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Thời Gian Bắt Đầu'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[19] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Thời Gian Hoàn Thành'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[20] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Xay Dung').item.json.output['Thời Gian Bảo Hành'] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        540
+      ],
+      "id": "858681d3-e6d5-4a58-a2b4-b82d7c07e124",
+      "name": "Update Thong Tin Hop Dong Xay Dung",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentURL": "=https://docs.google.com/document/d/{{ $('Copy Hop Dong Vay Muon').item.json.id }}/edit?tab=t.0 ",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[0] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Ngày ký hợp đồng'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[1] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Tên công ty'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[2] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Địa Chỉ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[3] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Địa Chỉ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[4] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Người đại diện'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[5] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Chức Vụ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[6] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Họ và tên:'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[7] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['CMND/CCCD '] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[8] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Ngày cấp'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[9] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Địa chỉ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[10] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Số điện thoại'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[10] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Số tiền vay'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[11] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Lãi suất'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[11] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Mục đích vay'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[12] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Mục đích vay'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[13] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Thời gian vay'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[14] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Thời gian vay'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[15] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Vay Muon').item.json.output['Lãi suất'] }}",
+              "matchCase": true
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        940
+      ],
+      "id": "dd02328c-046a-4579-b32a-6f2ab387c0a9",
+      "name": "Update Thong Tin Hop Dong Vay Muon",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentURL": "=https://docs.google.com/document/d/{{ $('Copy Hop Dong Mua Ban').item.json.id }}/edit?tab=t.0 ",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "={{$json.placeholders[0]}}  ",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Ngày ký hợp đồng'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[1] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Địa Chỉ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[2] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Tên'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[3] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Địa Chỉ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[4] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Người đại diện'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[5] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Chức Vụ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[6] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Họ và tên:'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[7] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['CMND/CCCD '] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[8] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Ngày cấp'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[9] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Địa chỉ'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[10] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Số điện thoại'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[11] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Loại Tài Sản'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[12] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Chi Tiết Tài Sản'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[13] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Giá trị mua bán'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "={{ $json.placeholders[14] }}",
+              "replaceText": "={{ $('Thong Tin Hop Dong Mua Ban').item.json.output['Phương thức thanh toán'] }}",
+              "matchCase": true
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        1340
+      ],
+      "id": "b7240ac9-3f9d-4999-8739-c6f4c85d15ca",
+      "name": "Update Thong Tin Hop Dong Mua Ban",
+      "credentials": {
+        "googleApi": {
+          "id": "UFYSZcd8CgntABwS",
+          "name": "GSA_N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "res = [];\ncontract = {}\ndocument_id = {};\nfor item in _('Tro Ly Hop Dong Vay Muon').all():\n  contract = item.json[\"output\"];\n  break;\nfor item in _('Copy Hop Dong Vay Muon').all():\n  document_id = item.json[\"id\"];\n  break;\nurl = f\"https://docs.google.com/document/d/{document_id}/edit?tab=t.0\";\noutput = {\n    \"json\": {\n        \"contract\": contract,\n        \"url\": url\n    }\n}\nres.append(output)\n\nreturn res\n\n  "
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        940
+      ],
+      "id": "4a6556bd-e49b-4ebf-8c08-aae6d880a6ce",
+      "name": "Tong Hop Thong Tin Hop Dong Vay Muon va Link"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "res = [];\ncontract = {}\ndocument_id = {};\nfor item in _('Tro Ly Hop Dong Xay Dung').all():\n  contract = item.json[\"output\"];\n  break;\nfor item in _('Copy Hop Dong Xay Dung').all():\n  document_id = item.json[\"id\"];\n  break;\nurl = f\"https://docs.google.com/document/d/{document_id}/edit?tab=t.0\";\noutput = {\n    \"json\": {\n        \"contract\": contract,\n        \"url\": url\n    }\n}\nres.append(output)\n\nreturn res\n\n  "
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1720,
+        540
+      ],
+      "id": "2ccf16a9-5523-4b79-a5aa-c8edd32a8d13",
+      "name": "Tong Hop Thong Tin Hop Dong Vay Muon va Link1"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.sessionID }}",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        360,
+        660
+      ],
+      "id": "6bbdffa3-da18-4959-96fb-b8d3afcc7612",
+      "name": "Postgres Chat Memory2",
+      "credentials": {
+        "postgres": {
+          "id": "vEJzSvEtz2wK5mnU",
+          "name": "Postgres account 18_CSKH"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Thong Tin Hop Dong Mua Ban",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Mua Ban",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Vay Muon",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Thong Tin Hop Dong Vay Muon",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trợ Lý Nhi": {
+      "main": [
+        [
+          {
+            "node": "Formant dữ liệu cho giống với phía dưới",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Trợ Lý Nhi",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Thong Tin Hop Dong Xay Dung",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Thong Tin Hop Dong Vay Muon",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Thong Tin Hop Dong Mua Ban",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Trợ Lý Nhi",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formant dữ liệu cho giống với phía dưới": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Thong Tin Hop Dong Xay Dung",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model7": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Xay Dung",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tổng Hợp Thông Tin Hợp Đồng và Link1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Vay Muon",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Xay Dung",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Mua Ban",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy Hop Dong Vay Muon": {
+      "main": [
+        [
+          {
+            "node": "Lay Thong Tin Hop Dong Vay Muon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy Hop Dong Mua Ban": {
+      "main": [
+        [
+          {
+            "node": "Lay Thong Tin Hop Dong Mua Ban",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy Hop Dong Xay Dung": {
+      "main": [
+        [
+          {
+            "node": "Lay Thong Tin Hop Dong  Xay Dung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Thong Tin Hop Dong Xay Dung": {
+      "main": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Xay Dung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Thong Tin Hop Dong Vay Muon": {
+      "main": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Vay Muon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Thong Tin Hop Dong Mua Ban": {
+      "main": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Mua Ban",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tro Ly Hop Dong Mua Ban": {
+      "main": [
+        [
+          {
+            "node": "Copy Hop Dong Mua Ban",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tro Ly Hop Dong Vay Muon": {
+      "main": [
+        [
+          {
+            "node": "Copy Hop Dong Vay Muon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tro Ly Hop Dong Xay Dung": {
+      "main": [
+        [
+          {
+            "node": "Copy Hop Dong Xay Dung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lay Thong Tin Hop Dong  Xay Dung": {
+      "main": [
+        [
+          {
+            "node": "Lay Du Lieu Trong Hop Dong Xay Dung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lay Thong Tin Hop Dong Vay Muon": {
+      "main": [
+        [
+          {
+            "node": "Lay Du Lieu Trong Hop Dong Vay Muon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lay Thong Tin Hop Dong Mua Ban": {
+      "main": [
+        [
+          {
+            "node": "Lay Du Lieu Trong Hop Dong Mua Ban",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lay Du Lieu Trong Hop Dong Xay Dung": {
+      "main": [
+        [
+          {
+            "node": "Update Thong Tin Hop Dong Xay Dung",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lay Du Lieu Trong Hop Dong Vay Muon": {
+      "main": [
+        [
+          {
+            "node": "Update Thong Tin Hop Dong Vay Muon",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lay Du Lieu Trong Hop Dong Mua Ban": {
+      "main": [
+        [
+          {
+            "node": "Update Thong Tin Hop Dong Mua Ban",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Thong Tin Hop Dong Xay Dung": {
+      "main": [
+        [
+          {
+            "node": "Tong Hop Thong Tin Hop Dong Vay Muon va Link1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Thong Tin Hop Dong Vay Muon": {
+      "main": [
+        [
+          {
+            "node": "Tong Hop Thong Tin Hop Dong Vay Muon va Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Thong Tin Hop Dong Mua Ban": {
+      "main": [
+        [
+          {
+            "node": "Tổng Hợp Thông Tin Hợp Đồng và Link1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tong Hop Thong Tin Hop Dong Vay Muon va Link": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tong Hop Thong Tin Hop Dong Vay Muon va Link1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Xay Dung",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Mua Ban",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Tro Ly Hop Dong Vay Muon",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory3": {
+      "ai_memory": [
+        [
+          {
+            "node": "Trợ Lý Nhi",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fa116634-dce2-4846-8654-27079758f1bf",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "94a383c02457267bcc44878635a0fa02b7d3206c5479bfc8890faa812e2bbd97"
+  },
+  "id": "LNtQ6LeD2MbILBsA",
+  "tags": []
+}
